@@ -23,8 +23,8 @@ file(GLOB experimental_gen_ai_cpp_source_files_gpu
   # src/kv_cache/*.cpp
   # src/kv_cache/*.cu
   # Quantize Ops
-  src/quantize/*.cpp
-  src/quantize/*.cu)
+  src/quantize/*_hip.cpp
+  src/quantize/*.hip)
 
 # Set the source file for FB only CPP
 # if(USE_FB_ONLY)
