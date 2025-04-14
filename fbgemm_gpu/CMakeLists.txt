@@ -119,6 +119,8 @@ set(fbgemm_sources_include_directories
   ${THIRDPARTY}/cpuinfo/include
   ${THIRDPARTY}/cutlass/include
   ${THIRDPARTY}/cutlass/tools/util/include
+  ${THIRDPARTY}/composable_kernel/include
+  ${THIRDPARTY}/composable_kernel/include/ck_tile/ops
   ${THIRDPARTY}/json/include
   ${NCCL_INCLUDE_DIRS})
 
@@ -245,7 +247,7 @@ if(FBGEMM_GENAI_ONLY)
   add_subdirectory(experimental/gen_ai)
 
   # Add experimental packaging example
-  add_subdirectory(experimental/example)
+  # add_subdirectory(experimental/example)
 
   # Add Triton GEMM (GenAI) kernels if non-CPU build
   add_subdirectory(experimental/gemm)

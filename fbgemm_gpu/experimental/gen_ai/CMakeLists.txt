@@ -10,39 +10,39 @@
 
 
 file(GLOB experimental_gen_ai_cpp_source_files_gpu
-  # Attention Ops
-  src/attention/*.cpp
-  src/attention/*.cu
-  # Comm Ops
-  src/comm/*.cpp
-  src/comm/*.cu
-  # Gather Scatter Ops
-  src/gather_scatter/*.cpp
-  src/gather_scatter/*.cu
-  # Quantize Ops
-  src/kv_cache/*.cpp
-  src/kv_cache/*.cu
+  # # Attention Ops
+  # src/attention/*.cpp
+  # src/attention/*.cu
+  # # # Comm Ops
+  # # src/comm/*.cpp
+  # # src/comm/*.cu
+  # # Gather Scatter Ops
+  # src/gather_scatter/*.cpp
+  # src/gather_scatter/*.cu
+  # # Quantize Ops
+  # src/kv_cache/*.cpp
+  # src/kv_cache/*.cu
   # Quantize Ops
   src/quantize/*.cpp
   src/quantize/*.cu)
 
 # Set the source file for FB only CPP
-if(USE_FB_ONLY)
-  file(GLOB fb_only_cxx_sources
-      fb/src/moe/*.cu
-      fb/src/moe/*.cpp
-      fb/src/trt_llm/*.cu
-      fb/src/trt_llm/*.cpp)
-  list(APPEND experimental_gen_ai_cpp_source_files_gpu ${fb_only_cxx_sources})
-endif()
+# if(USE_FB_ONLY)
+#   file(GLOB fb_only_cxx_sources
+#       fb/src/moe/*.cu
+#       fb/src/moe/*.cpp
+#       fb/src/trt_llm/*.cu
+#       fb/src/trt_llm/*.cpp)
+#   list(APPEND experimental_gen_ai_cpp_source_files_gpu ${fb_only_cxx_sources})
+# endif()
 
-# CUDA-specific sources
-file(GLOB_RECURSE experimental_gen_ai_cpp_source_files_cuda
-  src/quantize/cutlass_extensions/*.cu
-  src/quantize/cutlass_extensions/**/*.cu
-  src/quantize/fast_gemv/*.cu
-  src/quantize/fast_gemv/**/*.cu
-  src/quantize/fast_gemv/**/*.cuh)
+# # CUDA-specific sources
+# file(GLOB_RECURSE experimental_gen_ai_cpp_source_files_cuda
+#   src/quantize/cutlass_extensions/*.cu
+#   src/quantize/cutlass_extensions/**/*.cu
+#   src/quantize/fast_gemv/*.cu
+#   src/quantize/fast_gemv/**/*.cu
+#   src/quantize/fast_gemv/**/*.cuh)
 
 # HIP-specific sources
 file(GLOB_RECURSE experimental_gen_ai_cpp_source_files_hip
