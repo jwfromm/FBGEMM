@@ -29,7 +29,7 @@ except ImportError:
             super().__init__()
 
 
-from .quantize_ops import get_quantize_ops, QuantizeOpBase
+from quantize_ops import get_quantize_ops, QuantizeOpBase
 
 
 def generate_group_tensor(G, M):
@@ -482,7 +482,7 @@ def main(args: Any):
         plot_benchmark(benchmark_results, args.output_dir)
 
 
-def invoke_main() -> None:
+if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--output_dir", default="/tmp", help="Directory to save plots and csvs to"

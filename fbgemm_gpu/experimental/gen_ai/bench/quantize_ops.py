@@ -26,10 +26,13 @@ from fbgemm_gpu.experimental.gemm.triton_gemm.grouped_gemm import (
     grouped_gemm_fp8_rowwise,
 )
 from fbgemm_gpu.experimental.gen_ai.quantize import quantize_int4_preshuffle
-from tinygemm.utils import group_quantize_tensor
+try:
+    from tinygemm.utils import group_quantize_tensor
+    if torch.cuda.is_available() and torch.version.cuda:
+        torch.ops.load_library("//tinygemm:tinygemm")
 
-if torch.cuda.is_available() and torch.version.cuda:
-    torch.ops.load_library("//tinygemm:tinygemm")
+except:
+    TINYGEMM_ENABLED = False
 
 # Marlin currently only is supported only internally at Meta.
 try:
