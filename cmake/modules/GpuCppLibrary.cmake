@@ -4,8 +4,6 @@
 # This source code is licensed under the BSD-style license found in the
 # LICENSE file in the root directory of this source tree.
 
-include(${CMAKE_CURRENT_SOURCE_DIR}/../cmake/modules/Utilities.cmake)
-
 function(prepare_target_sources)
     # This function does the following:
     #
@@ -267,23 +265,21 @@ function(gpu_cpp_library)
         # https://stackoverflow.com/questions/3961446/why-does-gcc-not-implicitly-supply-the-fpic-flag-when-compiling-static-librarie
         POSITION_INDEPENDENT_CODE ON)
 
-    if (args_DEPS)
-        # Only set this if the library has dependencies that we also build,
-        # otherwise we will hit the following error:
-        #   `No valid ELF RPATH or RUNPATH entry exists in the file`
-        set_target_properties(${lib_name} PROPERTIES
-            BUILD_WITH_INSTALL_RPATH ON
-            # Set the RPATH for the library to include $ORIGIN, so it can look
-            # into the same directory for dependency .SO files to load, e.g.
-            # fbgemm_gpu.so -> fbgemm.so, asmjit.so
-            #
-            # More info on RPATHS:
-            #   https://amir.rachum.com/shared-libraries/#debugging-cheat-sheet
-            #   https://stackoverflow.com/questions/43330165/how-to-link-a-shared-library-with-cmake-with-relative-path
-            #   https://stackoverflow.com/questions/57915564/cmake-how-to-set-rpath-to-origin-with-cmake
-            #   https://stackoverflow.com/questions/58360502/how-to-set-rpath-origin-in-cmake
-            INSTALL_RPATH "\$ORIGIN")
-    endif()
+    # Only set this if the library has dependencies that we also build,
+    # otherwise we will hit the following error:
+    #   `No valid ELF RPATH or RUNPATH entry exists in the file`
+    set_target_properties(${lib_name} PROPERTIES
+        BUILD_WITH_INSTALL_RPATH ON
+        # Set the RPATH for the library to include $ORIGIN, so it can look
+        # into the same directory for dependency .SO files to load, e.g.
+        # fbgemm_gpu.so -> fbgemm.so, asmjit.so
+        #
+        # More info on RPATHS:
+        #   https://amir.rachum.com/shared-libraries/#debugging-cheat-sheet
+        #   https://stackoverflow.com/questions/43330165/how-to-link-a-shared-library-with-cmake-with-relative-path
+        #   https://stackoverflow.com/questions/57915564/cmake-how-to-set-rpath-to-origin-with-cmake
+        #   https://stackoverflow.com/questions/58360502/how-to-set-rpath-origin-in-cmake
+        INSTALL_RPATH "\$ORIGIN")
 
     # Collect external libraries for linking
     set(library_dependencies
@@ -315,12 +311,10 @@ function(gpu_cpp_library)
     # Post-Build Steps
     ############################################################################
 
-    if (args_DEPS)
-        # Only set this if the library has dependencies that we also build,
-        # otherwise we will hit the following error:
-        #   `No valid ELF RPATH or RUNPATH entry exists in the file`
-        set(set_rpath_to_origin 1)
-    endif()
+    # Only set this if the library has dependencies that we also build,
+    # otherwise we will hit the following error:
+    #   `No valid ELF RPATH or RUNPATH entry exists in the file`
+    set(set_rpath_to_origin 1)
 
     # Add a post-build step to remove errant RPATHs from the .SO
     add_custom_target(${lib_name}_postbuild ALL

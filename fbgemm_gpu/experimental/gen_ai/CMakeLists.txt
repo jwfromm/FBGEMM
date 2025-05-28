@@ -5,6 +5,24 @@
 # LICENSE file in the root directory of this source tree.
 
 ################################################################################
+# CMake Prelude
+################################################################################
+
+cmake_minimum_required(VERSION 3.21 FATAL_ERROR)
+
+set(CMAKEMODULES ${CMAKE_CURRENT_SOURCE_DIR}/../../../cmake/modules)
+include(${CMAKEMODULES}/Utilities.cmake)
+include(${CMAKEMODULES}/GpuCppLibrary.cmake)
+
+# CUDA Setup
+include(${CMAKEMODULES}/CudaSetup.cmake)
+
+# ROCm and HIPify Setup
+include(${CMAKEMODULES}/RocmSetup.cmake)
+
+set(CMAKE_VERBOSE_MAKEFILE ON)
+
+################################################################################
 # Target Sources
 ################################################################################
 
@@ -95,6 +113,8 @@ gpu_cpp_library(
     ${fbgemm_sources_include_directories}
     ${CMAKE_CURRENT_SOURCE_DIR}/src/quantize
     ${CMAKE_CURRENT_SOURCE_DIR}/src/kv_cache
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../include
+    ${FBGEMM_GENAI_INCLUDE_DIRS}
   CPU_SRCS
     ${experimental_gen_ai_cpp_source_files_cpu}
   GPU_SRCS
